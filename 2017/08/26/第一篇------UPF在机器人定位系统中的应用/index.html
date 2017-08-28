@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一篇------基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用">
+<meta property="og:url" content="http://zhoujingliumaoshen.github.io/2017/08/26/第一篇------UPF在机器人定位系统中的应用/index.html">
+<meta property="og:site_name" content="周静的博客">
+<meta property="og:image" content="http://img.taopic.com/uploads/allimg/130125/240375-1301251H35428.jpg">
+<meta property="og:updated_time" content="2017-08-28T13:55:17.651Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一篇------基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用">
+<meta name="twitter:image" content="http://img.taopic.com/uploads/allimg/130125/240375-1301251H35428.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zhoujingliumaoshen.github.io/2017/08/26/第一篇------UPF在机器人定位系统中的应用/"/>
+
+
+
+
+
+  <title> 第一篇------基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用 | 周静的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">周静的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">博学而约取，厚积而薄发</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zhoujingliumaoshen.github.io/2017/08/26/第一篇------UPF在机器人定位系统中的应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhou Jing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/32269?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="周静的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第一篇------基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-26T10:31:06+08:00">
+                2017-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://img.taopic.com/uploads/allimg/130125/240375-1301251H35428.jpg" alt=""><br><a id="more"></a></p>
+<h2 id="基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用"><a href="#基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用" class="headerlink" title="基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用"></a>基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用</h2><h5 id="周静"><a href="#周静" class="headerlink" title="周静"></a>周静</h5><h5 id="（北京工业大学，信息学部人工智能与机器人研究所，北京-100020）"><a href="#（北京工业大学，信息学部人工智能与机器人研究所，北京-100020）" class="headerlink" title="（北京工业大学，信息学部人工智能与机器人研究所，北京 100020）"></a>（北京工业大学，信息学部人工智能与机器人研究所，北京 100020）</h5><h4 id="摘要-定位技术是自主移动机器人最基本也是最重要的技术之一。本文介绍了几种目前被广泛研究的机器人定位技术，对其优缺点进行对比分析。提出基于改进无迹粒子滤波-Improved-unscented-particle-filter-IUPF-的蒙特卡洛算法，利用迭代Sigma-点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，IUPF-MCL-是一种精确鲁棒的移动机器人定位算法。"><a href="#摘要-定位技术是自主移动机器人最基本也是最重要的技术之一。本文介绍了几种目前被广泛研究的机器人定位技术，对其优缺点进行对比分析。提出基于改进无迹粒子滤波-Improved-unscented-particle-filter-IUPF-的蒙特卡洛算法，利用迭代Sigma-点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，IUPF-MCL-是一种精确鲁棒的移动机器人定位算法。" class="headerlink" title="摘要  定位技术是自主移动机器人最基本也是最重要的技术之一。本文介绍了几种目前被广泛研究的机器人定位技术，对其优缺点进行对比分析。提出基于改进无迹粒子滤波(Improved unscented particle filter, IUPF) 的蒙特卡洛算法，利用迭代Sigma 点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，IUPF-MCL 是一种精确鲁棒的移动机器人定位算法。"></a><strong>摘要</strong>  定位技术是自主移动机器人最基本也是最重要的技术之一。本文介绍了几种目前被广泛研究的机器人定位技术，对其优缺点进行对比分析。提出基于改进无迹粒子滤波(Improved unscented particle filter, IUPF) 的蒙特卡洛算法，利用迭代Sigma 点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，IUPF-MCL 是一种精确鲁棒的移动机器人定位算法。</h4><h4 id="关键词-移动机器人，定位技术，改进无迹粒子滤波，蒙特卡洛算法"><a href="#关键词-移动机器人，定位技术，改进无迹粒子滤波，蒙特卡洛算法" class="headerlink" title="关键词  移动机器人，定位技术，改进无迹粒子滤波，蒙特卡洛算法"></a><strong>关键词</strong>  移动机器人，定位技术，改进无迹粒子滤波，蒙特卡洛算法</h4><h4 id="Abstract-Localization-technology-is-one-of-the-most-basic-and-important-function-in-autonomous-mobile-robot-This-paper-In-this-paper-several-kinds-of-robot-localization-techniques-that-are-widely-studied-are-introduced-including-their-advantages-and-disadvantage-A-Monte-Carlo-algorithm-based-on-improved-unscented-particle-filter-IUPF-is-proposed-The-algorithm-utilizes-iterated-sigma-points-Kalman-filter-to-generate-more-accurate-proposal-distribution-which-introduces-most-recent-measurement-information-into-sequential-importance-sampling-SIS-routine-through-iterated-update-processing-Experimental-results-show-that-IUPF-MCL-is-an-accurate-and-robust-mobile-robot-localization-algorithm"><a href="#Abstract-Localization-technology-is-one-of-the-most-basic-and-important-function-in-autonomous-mobile-robot-This-paper-In-this-paper-several-kinds-of-robot-localization-techniques-that-are-widely-studied-are-introduced-including-their-advantages-and-disadvantage-A-Monte-Carlo-algorithm-based-on-improved-unscented-particle-filter-IUPF-is-proposed-The-algorithm-utilizes-iterated-sigma-points-Kalman-filter-to-generate-more-accurate-proposal-distribution-which-introduces-most-recent-measurement-information-into-sequential-importance-sampling-SIS-routine-through-iterated-update-processing-Experimental-results-show-that-IUPF-MCL-is-an-accurate-and-robust-mobile-robot-localization-algorithm" class="headerlink" title="Abstract  Localization technology is one of the most basic and important function in autonomous mobile robot. This paper In this paper, several kinds of robot localization techniques that are widely studied  are introduced, including their advantages and disadvantage. A Monte Carlo algorithm based on improved unscented particle filter (IUPF) is proposed. The algorithm utilizes iterated sigma points Kalman filter to generate more accurate proposal distribution, which introduces most recent measurement information into sequential importance sampling (SIS) routine through iterated update processing. Experimental results show that IUPF-MCL is an accurate  and robust mobile robot localization algorithm."></a><strong>Abstract</strong>  Localization technology is one of the most basic and important function in autonomous mobile robot. This paper In this paper, several kinds of robot localization techniques that are widely studied  are introduced, including their advantages and disadvantage. A Monte Carlo algorithm based on improved unscented particle filter (IUPF) is proposed. The algorithm utilizes iterated sigma points Kalman filter to generate more accurate proposal distribution, which introduces most recent measurement information into sequential importance sampling (SIS) routine through iterated update processing. Experimental results show that IUPF-MCL is an accurate  and robust mobile robot localization algorithm.</h4><h4 id="Keywords-mobile-robot-localization-techniques-improved-unscented-particle-filter-Monte-Carlo-algorithm"><a href="#Keywords-mobile-robot-localization-techniques-improved-unscented-particle-filter-Monte-Carlo-algorithm" class="headerlink" title="Keywords   mobile robot; localization techniques; improved unscented particle filter; Monte Carlo algorithm"></a><strong>Keywords</strong>   mobile robot; localization techniques; improved unscented particle filter; Monte Carlo algorithm</h4><h3 id="0-引言"><a href="#0-引言" class="headerlink" title="0 引言"></a>0 引言</h3><h4 id="定位是确定机器人在其作业环境中所处位置的过程，是移动机器人导航的关键一步。定位的性能指标根据具体的应用场合提出不同要求，主要包括：定位精度，时间消耗和能量消耗。近年来，随着人工智能和移动机器人导航技术不断发展，定位问题也成为研究者们争相探讨的热点，为进一步提高机器人定位系统的精度和鲁棒性，提出一系列解决办法。具体来说，可以把移动机器人定位分为基于路标、基于概率和基于地图的方法分别进行研究，文中将着重介绍前两种方法。提出基于改进无迹粒子滤波的蒙特卡洛定位算法，利用迭代Sigma-点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，这是一种能够提高定位精度和鲁棒性的有效算法。"><a href="#定位是确定机器人在其作业环境中所处位置的过程，是移动机器人导航的关键一步。定位的性能指标根据具体的应用场合提出不同要求，主要包括：定位精度，时间消耗和能量消耗。近年来，随着人工智能和移动机器人导航技术不断发展，定位问题也成为研究者们争相探讨的热点，为进一步提高机器人定位系统的精度和鲁棒性，提出一系列解决办法。具体来说，可以把移动机器人定位分为基于路标、基于概率和基于地图的方法分别进行研究，文中将着重介绍前两种方法。提出基于改进无迹粒子滤波的蒙特卡洛定位算法，利用迭代Sigma-点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，这是一种能够提高定位精度和鲁棒性的有效算法。" class="headerlink" title="定位是确定机器人在其作业环境中所处位置的过程，是移动机器人导航的关键一步。定位的性能指标根据具体的应用场合提出不同要求，主要包括：定位精度，时间消耗和能量消耗。近年来，随着人工智能和移动机器人导航技术不断发展，定位问题也成为研究者们争相探讨的热点，为进一步提高机器人定位系统的精度和鲁棒性，提出一系列解决办法。具体来说，可以把移动机器人定位分为基于路标、基于概率和基于地图的方法分别进行研究，文中将着重介绍前两种方法。提出基于改进无迹粒子滤波的蒙特卡洛定位算法，利用迭代Sigma 点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，这是一种能够提高定位精度和鲁棒性的有效算法。"></a>定位是确定机器人在其作业环境中所处位置的过程，是移动机器人导航的关键一步。定位的性能指标根据具体的应用场合提出不同要求，主要包括：定位精度，时间消耗和能量消耗。近年来，随着人工智能和移动机器人导航技术不断发展，定位问题也成为研究者们争相探讨的热点，为进一步提高机器人定位系统的精度和鲁棒性，提出一系列解决办法。具体来说，可以把移动机器人定位分为基于路标、基于概率和基于地图的方法分别进行研究，文中将着重介绍前两种方法。提出基于改进无迹粒子滤波的蒙特卡洛定位算法，利用迭代Sigma 点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，这是一种能够提高定位精度和鲁棒性的有效算法。</h4><h3 id="1移动机器人定位技术"><a href="#1移动机器人定位技术" class="headerlink" title="1移动机器人定位技术"></a>1移动机器人定位技术</h3><h4 id="1-1基于路标的定位方法"><a href="#1-1基于路标的定位方法" class="headerlink" title="1.1基于路标的定位方法"></a><strong>1.1基于路标的定位方法</strong></h4><h4 id="路标是指具有明显特征的，能够被移动机器人传感器识别的特殊物体。路标本身可以安装在需要定位的移动机器人所处的环境中，诸如墙壁、路边，它们的位置是固定和已知的。移动机器人定位的主要任务就是可靠地辨识路标，-通过已知的路标位置计算出未知的移动机器人的位置。定位精度的高低取决于对路标的识别以及位置信息提取的准确程度。Craig-Becker-等采用基于天花板和墙壁的几何图形路标对移动机器人进行导航和定位，该方法思路简单，但这些特征并不足够明显，机器人识别过程中可能产生混乱。俞竹青等提出利用超声波网络进行定位的系统，理论上该方法克服了检测范围对检测精度的影响，但实际环境中超声波受噪音、空气的干扰和阻挠，鲁棒性较差。侯杰贤等设计了一种新型的人工路标，路标由三部分组成：红色矩形方框、内部背景以及待识别的目标图案。提出一种基于对数极坐标系投影直方图的路标识别方法，实验表明精度较高，平均误差率在8-以内。路标定位还存在一些问题：路标加工不精确，路标自身定位不准确，和路标摆放位置的影响。通过合理选取路标以及精确测量路标位置，可大大提高定位精度。"><a href="#路标是指具有明显特征的，能够被移动机器人传感器识别的特殊物体。路标本身可以安装在需要定位的移动机器人所处的环境中，诸如墙壁、路边，它们的位置是固定和已知的。移动机器人定位的主要任务就是可靠地辨识路标，-通过已知的路标位置计算出未知的移动机器人的位置。定位精度的高低取决于对路标的识别以及位置信息提取的准确程度。Craig-Becker-等采用基于天花板和墙壁的几何图形路标对移动机器人进行导航和定位，该方法思路简单，但这些特征并不足够明显，机器人识别过程中可能产生混乱。俞竹青等提出利用超声波网络进行定位的系统，理论上该方法克服了检测范围对检测精度的影响，但实际环境中超声波受噪音、空气的干扰和阻挠，鲁棒性较差。侯杰贤等设计了一种新型的人工路标，路标由三部分组成：红色矩形方框、内部背景以及待识别的目标图案。提出一种基于对数极坐标系投影直方图的路标识别方法，实验表明精度较高，平均误差率在8-以内。路标定位还存在一些问题：路标加工不精确，路标自身定位不准确，和路标摆放位置的影响。通过合理选取路标以及精确测量路标位置，可大大提高定位精度。" class="headerlink" title="路标是指具有明显特征的，能够被移动机器人传感器识别的特殊物体。路标本身可以安装在需要定位的移动机器人所处的环境中，诸如墙壁、路边，它们的位置是固定和已知的。移动机器人定位的主要任务就是可靠地辨识路标， 通过已知的路标位置计算出未知的移动机器人的位置。定位精度的高低取决于对路标的识别以及位置信息提取的准确程度。Craig Becker 等采用基于天花板和墙壁的几何图形路标对移动机器人进行导航和定位，该方法思路简单，但这些特征并不足够明显，机器人识别过程中可能产生混乱。俞竹青等提出利用超声波网络进行定位的系统，理论上该方法克服了检测范围对检测精度的影响，但实际环境中超声波受噪音、空气的干扰和阻挠，鲁棒性较差。侯杰贤等设计了一种新型的人工路标，路标由三部分组成：红色矩形方框、内部背景以及待识别的目标图案。提出一种基于对数极坐标系投影直方图的路标识别方法，实验表明精度较高，平均误差率在8%以内。路标定位还存在一些问题：路标加工不精确，路标自身定位不准确，和路标摆放位置的影响。通过合理选取路标以及精确测量路标位置，可大大提高定位精度。"></a>路标是指具有明显特征的，能够被移动机器人传感器识别的特殊物体。路标本身可以安装在需要定位的移动机器人所处的环境中，诸如墙壁、路边，它们的位置是固定和已知的。移动机器人定位的主要任务就是可靠地辨识路标， 通过已知的路标位置计算出未知的移动机器人的位置。定位精度的高低取决于对路标的识别以及位置信息提取的准确程度。Craig Becker 等采用基于天花板和墙壁的几何图形路标对移动机器人进行导航和定位，该方法思路简单，但这些特征并不足够明显，机器人识别过程中可能产生混乱。俞竹青等提出利用超声波网络进行定位的系统，理论上该方法克服了检测范围对检测精度的影响，但实际环境中超声波受噪音、空气的干扰和阻挠，鲁棒性较差。侯杰贤等设计了一种新型的人工路标，路标由三部分组成：红色矩形方框、内部背景以及待识别的目标图案。提出一种基于对数极坐标系投影直方图的路标识别方法，实验表明精度较高，平均误差率在8%以内。路标定位还存在一些问题：路标加工不精确，路标自身定位不准确，和路标摆放位置的影响。通过合理选取路标以及精确测量路标位置，可大大提高定位精度。</h4><h4 id="1-2基于概率的定位方法"><a href="#1-2基于概率的定位方法" class="headerlink" title="1.2基于概率的定位方法"></a><strong>1.2基于概率的定位方法</strong></h4><h4 id="基于概率的定位方法的理论基础是贝叶斯滤波BF-Bayesian-Filter）是概率定位方法的理论基础，BF用传感器测量数据去估计一个动态系统的未知状态，其核心思想就是：以当前为止所收集的数据为条件，递归估计状态空间后验概率密度。"><a href="#基于概率的定位方法的理论基础是贝叶斯滤波BF-Bayesian-Filter）是概率定位方法的理论基础，BF用传感器测量数据去估计一个动态系统的未知状态，其核心思想就是：以当前为止所收集的数据为条件，递归估计状态空间后验概率密度。" class="headerlink" title="基于概率的定位方法的理论基础是贝叶斯滤波BF (Bayesian Filter）是概率定位方法的理论基础，BF用传感器测量数据去估计一个动态系统的未知状态，其核心思想就是：以当前为止所收集的数据为条件，递归估计状态空间后验概率密度。"></a>基于概率的定位方法的理论基础是贝叶斯滤波BF (Bayesian Filter）是概率定位方法的理论基础，BF用传感器测量数据去估计一个动态系统的未知状态，其核心思想就是：以当前为止所收集的数据为条件，递归估计状态空间后验概率密度。</h4><h4 id="（1）卡尔曼滤波定位方法。卡尔曼滤波器是一种简单有效的线性最优递推估计算法，也是最广泛的贝叶斯滤波器。包括五个核心关系式："><a href="#（1）卡尔曼滤波定位方法。卡尔曼滤波器是一种简单有效的线性最优递推估计算法，也是最广泛的贝叶斯滤波器。包括五个核心关系式：" class="headerlink" title="（1）卡尔曼滤波定位方法。卡尔曼滤波器是一种简单有效的线性最优递推估计算法，也是最广泛的贝叶斯滤波器。包括五个核心关系式："></a>（1）卡尔曼滤波定位方法。卡尔曼滤波器是一种简单有效的线性最优递推估计算法，也是最广泛的贝叶斯滤波器。包括五个核心关系式：</h4><h4 id="先验估计："><a href="#先验估计：" class="headerlink" title="先验估计： ="></a>先验估计： =</h4><h4 id="后验估计："><a href="#后验估计：" class="headerlink" title="后验估计：  = +"></a>后验估计：  = +</h4><h4 id="一步预测误差："><a href="#一步预测误差：" class="headerlink" title="一步预测误差： = +"></a>一步预测误差： = +</h4><h4 id="增益矩阵"><a href="#增益矩阵" class="headerlink" title="增益矩阵: ="></a>增益矩阵: =</h4><h4 id="更新一步预测误差：-（I-）"><a href="#更新一步预测误差：-（I-）" class="headerlink" title="更新一步预测误差： = （I-）"></a>更新一步预测误差： = （I-）</h4><h4 id="Roumeliotis-等利用卡尔曼滤波器，采用激光传感器探测路标，可以很好地实现机器人在工厂环境中的自定位与导航。Simon-J-Julier-等提出了无迹卡尔曼滤波器UKF（Unscented-Kalman-Filter），与EKF-不同的是，UKF-没有直接逼近非线性系统的状态过程以及观测模型，利用了真实的非线性模型。UKF-方法在精度以及鲁棒性方面都好于EKF，同时其计算量增加不大。"><a href="#Roumeliotis-等利用卡尔曼滤波器，采用激光传感器探测路标，可以很好地实现机器人在工厂环境中的自定位与导航。Simon-J-Julier-等提出了无迹卡尔曼滤波器UKF（Unscented-Kalman-Filter），与EKF-不同的是，UKF-没有直接逼近非线性系统的状态过程以及观测模型，利用了真实的非线性模型。UKF-方法在精度以及鲁棒性方面都好于EKF，同时其计算量增加不大。" class="headerlink" title="Roumeliotis 等利用卡尔曼滤波器，采用激光传感器探测路标，可以很好地实现机器人在工厂环境中的自定位与导航。Simon J.Julier 等提出了无迹卡尔曼滤波器UKF（Unscented Kalman Filter），与EKF 不同的是，UKF 没有直接逼近非线性系统的状态过程以及观测模型，利用了真实的非线性模型。UKF 方法在精度以及鲁棒性方面都好于EKF，同时其计算量增加不大。"></a>Roumeliotis 等利用卡尔曼滤波器，采用激光传感器探测路标，可以很好地实现机器人在工厂环境中的自定位与导航。Simon J.Julier 等提出了无迹卡尔曼滤波器UKF（Unscented Kalman Filter），与EKF 不同的是，UKF 没有直接逼近非线性系统的状态过程以及观测模型，利用了真实的非线性模型。UKF 方法在精度以及鲁棒性方面都好于EKF，同时其计算量增加不大。</h4><h4 id="卡尔曼滤波方法是一种高速高精度的局部定位方法，只需要知道噪声的均值和方差就可以迭代求解，且不需要大量计算和存储空间，因此得到广泛应用。但使用该算法的前提是状态噪声和观测噪声都必须均为高斯白噪声，且只能解决线性或弱的非线性问题，对于非线性系统无能为力。"><a href="#卡尔曼滤波方法是一种高速高精度的局部定位方法，只需要知道噪声的均值和方差就可以迭代求解，且不需要大量计算和存储空间，因此得到广泛应用。但使用该算法的前提是状态噪声和观测噪声都必须均为高斯白噪声，且只能解决线性或弱的非线性问题，对于非线性系统无能为力。" class="headerlink" title="卡尔曼滤波方法是一种高速高精度的局部定位方法，只需要知道噪声的均值和方差就可以迭代求解，且不需要大量计算和存储空间，因此得到广泛应用。但使用该算法的前提是状态噪声和观测噪声都必须均为高斯白噪声，且只能解决线性或弱的非线性问题，对于非线性系统无能为力。"></a>卡尔曼滤波方法是一种高速高精度的局部定位方法，只需要知道噪声的均值和方差就可以迭代求解，且不需要大量计算和存储空间，因此得到广泛应用。但使用该算法的前提是状态噪声和观测噪声都必须均为高斯白噪声，且只能解决线性或弱的非线性问题，对于非线性系统无能为力。</h4><h4 id="（2）马尔可夫定位方法。一般分为拓扑法和栅格法，栅格法目前很受学者青睐，因为它能简单可靠地实现全局定位，但随着栅格细化，也会极大地增加计算量和耗费存储空间。权衡计算量与定位精度之间的影响力成为使用栅格法的关键。"><a href="#（2）马尔可夫定位方法。一般分为拓扑法和栅格法，栅格法目前很受学者青睐，因为它能简单可靠地实现全局定位，但随着栅格细化，也会极大地增加计算量和耗费存储空间。权衡计算量与定位精度之间的影响力成为使用栅格法的关键。" class="headerlink" title="（2）马尔可夫定位方法。一般分为拓扑法和栅格法，栅格法目前很受学者青睐，因为它能简单可靠地实现全局定位，但随着栅格细化，也会极大地增加计算量和耗费存储空间。权衡计算量与定位精度之间的影响力成为使用栅格法的关键。"></a>（2）马尔可夫定位方法。一般分为拓扑法和栅格法，栅格法目前很受学者青睐，因为它能简单可靠地实现全局定位，但随着栅格细化，也会极大地增加计算量和耗费存储空间。权衡计算量与定位精度之间的影响力成为使用栅格法的关键。</h4><h4 id="（3）蒙特卡洛定位方法。也称粒子滤波，是最近几年刚开始在机器人学研究中得到应用的新方法。该方法不需要直接求解概率分布函数-而是用随机采样得到的样本集合来表示位置的不确定性。Dallert-等将粒子滤波和移动机器人运动和感知的概率模型相结合，提出了移动机器人蒙特卡罗定位MCL（Monte-Carlo-Localization）的思想。其基本思想是用一组滤波器来估计机器人的可能位置（处于该位置的概率），每个滤波器对应一个位置，利用观测对每个滤波器进行加权处理，从而使最有可能的位置的概率越来越高。Fox-等具体描述了MCL-并与其它算法进行比较。同时针对MCL-的不足提出了各种各样的改进方法，厉茂海、洪炳铭等提出基于混合高斯模型的蒙特卡罗定位方法，对采样进行优化，减少所需采样数。于金霞等采用改进的粒子滤波算法对移动机器人定位进行研究，将模糊地图匹配和粒子滤波重采样相结合，以减少粒子滤波采样中的不确定性影响，通过采用高斯混合分布近似建议分布对获得有效样本大小的样本权重计算方法进行改进，保证能够有合适的重采样次数。这种方法能够表示多峰分布，克服了卡尔曼定位只能解决单峰分布的不足，降低存贮空间，易于实现，定位精度高于马尔可夫算法，可以实现全局定位。但蒙特卡洛算法需考虑粒子退化和粒子重采样的问题。"><a href="#（3）蒙特卡洛定位方法。也称粒子滤波，是最近几年刚开始在机器人学研究中得到应用的新方法。该方法不需要直接求解概率分布函数-而是用随机采样得到的样本集合来表示位置的不确定性。Dallert-等将粒子滤波和移动机器人运动和感知的概率模型相结合，提出了移动机器人蒙特卡罗定位MCL（Monte-Carlo-Localization）的思想。其基本思想是用一组滤波器来估计机器人的可能位置（处于该位置的概率），每个滤波器对应一个位置，利用观测对每个滤波器进行加权处理，从而使最有可能的位置的概率越来越高。Fox-等具体描述了MCL-并与其它算法进行比较。同时针对MCL-的不足提出了各种各样的改进方法，厉茂海、洪炳铭等提出基于混合高斯模型的蒙特卡罗定位方法，对采样进行优化，减少所需采样数。于金霞等采用改进的粒子滤波算法对移动机器人定位进行研究，将模糊地图匹配和粒子滤波重采样相结合，以减少粒子滤波采样中的不确定性影响，通过采用高斯混合分布近似建议分布对获得有效样本大小的样本权重计算方法进行改进，保证能够有合适的重采样次数。这种方法能够表示多峰分布，克服了卡尔曼定位只能解决单峰分布的不足，降低存贮空间，易于实现，定位精度高于马尔可夫算法，可以实现全局定位。但蒙特卡洛算法需考虑粒子退化和粒子重采样的问题。" class="headerlink" title="（3）蒙特卡洛定位方法。也称粒子滤波，是最近几年刚开始在机器人学研究中得到应用的新方法。该方法不需要直接求解概率分布函数, 而是用随机采样得到的样本集合来表示位置的不确定性。Dallert 等将粒子滤波和移动机器人运动和感知的概率模型相结合，提出了移动机器人蒙特卡罗定位MCL（Monte Carlo Localization）的思想。其基本思想是用一组滤波器来估计机器人的可能位置（处于该位置的概率），每个滤波器对应一个位置，利用观测对每个滤波器进行加权处理，从而使最有可能的位置的概率越来越高。Fox 等具体描述了MCL 并与其它算法进行比较。同时针对MCL 的不足提出了各种各样的改进方法，厉茂海、洪炳铭等提出基于混合高斯模型的蒙特卡罗定位方法，对采样进行优化，减少所需采样数。于金霞等采用改进的粒子滤波算法对移动机器人定位进行研究，将模糊地图匹配和粒子滤波重采样相结合，以减少粒子滤波采样中的不确定性影响，通过采用高斯混合分布近似建议分布对获得有效样本大小的样本权重计算方法进行改进，保证能够有合适的重采样次数。这种方法能够表示多峰分布，克服了卡尔曼定位只能解决单峰分布的不足，降低存贮空间，易于实现，定位精度高于马尔可夫算法，可以实现全局定位。但蒙特卡洛算法需考虑粒子退化和粒子重采样的问题。"></a>（3）蒙特卡洛定位方法。也称粒子滤波，是最近几年刚开始在机器人学研究中得到应用的新方法。该方法不需要直接求解概率分布函数, 而是用随机采样得到的样本集合来表示位置的不确定性。Dallert 等将粒子滤波和移动机器人运动和感知的概率模型相结合，提出了移动机器人蒙特卡罗定位MCL（Monte Carlo Localization）的思想。其基本思想是用一组滤波器来估计机器人的可能位置（处于该位置的概率），每个滤波器对应一个位置，利用观测对每个滤波器进行加权处理，从而使最有可能的位置的概率越来越高。Fox 等具体描述了MCL 并与其它算法进行比较。同时针对MCL 的不足提出了各种各样的改进方法，厉茂海、洪炳铭等提出基于混合高斯模型的蒙特卡罗定位方法，对采样进行优化，减少所需采样数。于金霞等采用改进的粒子滤波算法对移动机器人定位进行研究，将模糊地图匹配和粒子滤波重采样相结合，以减少粒子滤波采样中的不确定性影响，通过采用高斯混合分布近似建议分布对获得有效样本大小的样本权重计算方法进行改进，保证能够有合适的重采样次数。这种方法能够表示多峰分布，克服了卡尔曼定位只能解决单峰分布的不足，降低存贮空间，易于实现，定位精度高于马尔可夫算法，可以实现全局定位。但蒙特卡洛算法需考虑粒子退化和粒子重采样的问题。</h4><h3 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/26/第二篇------hexo-next主题下发布新文章只需三步-1/" rel="prev" title="第二篇------hexo-next主题下发布新文章只需三步">
+                第二篇------hexo-next主题下发布新文章只需三步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/32269?v=3&s=460"
+               alt="Zhou Jing" />
+          <p class="site-author-name" itemprop="name">Zhou Jing</p>
+           
+              <p class="site-description motion-element" itemprop="description">生活趣事</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用"><span class="nav-number">1.</span> <span class="nav-text">基于改进无迹粒子滤波的蒙特卡洛算法在移动机器人定位系统中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#周静"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">周静</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（北京工业大学，信息学部人工智能与机器人研究所，北京-100020）"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">（北京工业大学，信息学部人工智能与机器人研究所，北京 100020）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#摘要-定位技术是自主移动机器人最基本也是最重要的技术之一。本文介绍了几种目前被广泛研究的机器人定位技术，对其优缺点进行对比分析。提出基于改进无迹粒子滤波-Improved-unscented-particle-filter-IUPF-的蒙特卡洛算法，利用迭代Sigma-点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，IUPF-MCL-是一种精确鲁棒的移动机器人定位算法。"><span class="nav-number">1.0.1.</span> <span class="nav-text">摘要  定位技术是自主移动机器人最基本也是最重要的技术之一。本文介绍了几种目前被广泛研究的机器人定位技术，对其优缺点进行对比分析。提出基于改进无迹粒子滤波(Improved unscented particle filter, IUPF) 的蒙特卡洛算法，利用迭代Sigma 点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，IUPF-MCL 是一种精确鲁棒的移动机器人定位算法。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关键词-移动机器人，定位技术，改进无迹粒子滤波，蒙特卡洛算法"><span class="nav-number">1.0.2.</span> <span class="nav-text">关键词  移动机器人，定位技术，改进无迹粒子滤波，蒙特卡洛算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Abstract-Localization-technology-is-one-of-the-most-basic-and-important-function-in-autonomous-mobile-robot-This-paper-In-this-paper-several-kinds-of-robot-localization-techniques-that-are-widely-studied-are-introduced-including-their-advantages-and-disadvantage-A-Monte-Carlo-algorithm-based-on-improved-unscented-particle-filter-IUPF-is-proposed-The-algorithm-utilizes-iterated-sigma-points-Kalman-filter-to-generate-more-accurate-proposal-distribution-which-introduces-most-recent-measurement-information-into-sequential-importance-sampling-SIS-routine-through-iterated-update-processing-Experimental-results-show-that-IUPF-MCL-is-an-accurate-and-robust-mobile-robot-localization-algorithm"><span class="nav-number">1.0.3.</span> <span class="nav-text">Abstract  Localization technology is one of the most basic and important function in autonomous mobile robot. This paper In this paper, several kinds of robot localization techniques that are widely studied  are introduced, including their advantages and disadvantage. A Monte Carlo algorithm based on improved unscented particle filter (IUPF) is proposed. The algorithm utilizes iterated sigma points Kalman filter to generate more accurate proposal distribution, which introduces most recent measurement information into sequential importance sampling (SIS) routine through iterated update processing. Experimental results show that IUPF-MCL is an accurate  and robust mobile robot localization algorithm.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Keywords-mobile-robot-localization-techniques-improved-unscented-particle-filter-Monte-Carlo-algorithm"><span class="nav-number">1.0.4.</span> <span class="nav-text">Keywords   mobile robot; localization techniques; improved unscented particle filter; Monte Carlo algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-引言"><span class="nav-number">1.1.</span> <span class="nav-text">0 引言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定位是确定机器人在其作业环境中所处位置的过程，是移动机器人导航的关键一步。定位的性能指标根据具体的应用场合提出不同要求，主要包括：定位精度，时间消耗和能量消耗。近年来，随着人工智能和移动机器人导航技术不断发展，定位问题也成为研究者们争相探讨的热点，为进一步提高机器人定位系统的精度和鲁棒性，提出一系列解决办法。具体来说，可以把移动机器人定位分为基于路标、基于概率和基于地图的方法分别进行研究，文中将着重介绍前两种方法。提出基于改进无迹粒子滤波的蒙特卡洛定位算法，利用迭代Sigma-点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，这是一种能够提高定位精度和鲁棒性的有效算法。"><span class="nav-number">1.1.1.</span> <span class="nav-text">定位是确定机器人在其作业环境中所处位置的过程，是移动机器人导航的关键一步。定位的性能指标根据具体的应用场合提出不同要求，主要包括：定位精度，时间消耗和能量消耗。近年来，随着人工智能和移动机器人导航技术不断发展，定位问题也成为研究者们争相探讨的热点，为进一步提高机器人定位系统的精度和鲁棒性，提出一系列解决办法。具体来说，可以把移动机器人定位分为基于路标、基于概率和基于地图的方法分别进行研究，文中将着重介绍前两种方法。提出基于改进无迹粒子滤波的蒙特卡洛定位算法，利用迭代Sigma 点卡尔曼滤波来精确设计粒子滤波器的提议分布，以迭代更新方式将当前观测信息融入顺序重要性采样过程。实验结果表明，这是一种能够提高定位精度和鲁棒性的有效算法。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1移动机器人定位技术"><span class="nav-number">1.2.</span> <span class="nav-text">1移动机器人定位技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1基于路标的定位方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1基于路标的定位方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路标是指具有明显特征的，能够被移动机器人传感器识别的特殊物体。路标本身可以安装在需要定位的移动机器人所处的环境中，诸如墙壁、路边，它们的位置是固定和已知的。移动机器人定位的主要任务就是可靠地辨识路标，-通过已知的路标位置计算出未知的移动机器人的位置。定位精度的高低取决于对路标的识别以及位置信息提取的准确程度。Craig-Becker-等采用基于天花板和墙壁的几何图形路标对移动机器人进行导航和定位，该方法思路简单，但这些特征并不足够明显，机器人识别过程中可能产生混乱。俞竹青等提出利用超声波网络进行定位的系统，理论上该方法克服了检测范围对检测精度的影响，但实际环境中超声波受噪音、空气的干扰和阻挠，鲁棒性较差。侯杰贤等设计了一种新型的人工路标，路标由三部分组成：红色矩形方框、内部背景以及待识别的目标图案。提出一种基于对数极坐标系投影直方图的路标识别方法，实验表明精度较高，平均误差率在8-以内。路标定位还存在一些问题：路标加工不精确，路标自身定位不准确，和路标摆放位置的影响。通过合理选取路标以及精确测量路标位置，可大大提高定位精度。"><span class="nav-number">1.2.2.</span> <span class="nav-text">路标是指具有明显特征的，能够被移动机器人传感器识别的特殊物体。路标本身可以安装在需要定位的移动机器人所处的环境中，诸如墙壁、路边，它们的位置是固定和已知的。移动机器人定位的主要任务就是可靠地辨识路标， 通过已知的路标位置计算出未知的移动机器人的位置。定位精度的高低取决于对路标的识别以及位置信息提取的准确程度。Craig Becker 等采用基于天花板和墙壁的几何图形路标对移动机器人进行导航和定位，该方法思路简单，但这些特征并不足够明显，机器人识别过程中可能产生混乱。俞竹青等提出利用超声波网络进行定位的系统，理论上该方法克服了检测范围对检测精度的影响，但实际环境中超声波受噪音、空气的干扰和阻挠，鲁棒性较差。侯杰贤等设计了一种新型的人工路标，路标由三部分组成：红色矩形方框、内部背景以及待识别的目标图案。提出一种基于对数极坐标系投影直方图的路标识别方法，实验表明精度较高，平均误差率在8%以内。路标定位还存在一些问题：路标加工不精确，路标自身定位不准确，和路标摆放位置的影响。通过合理选取路标以及精确测量路标位置，可大大提高定位精度。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2基于概率的定位方法"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2基于概率的定位方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于概率的定位方法的理论基础是贝叶斯滤波BF-Bayesian-Filter）是概率定位方法的理论基础，BF用传感器测量数据去估计一个动态系统的未知状态，其核心思想就是：以当前为止所收集的数据为条件，递归估计状态空间后验概率密度。"><span class="nav-number">1.2.4.</span> <span class="nav-text">基于概率的定位方法的理论基础是贝叶斯滤波BF (Bayesian Filter）是概率定位方法的理论基础，BF用传感器测量数据去估计一个动态系统的未知状态，其核心思想就是：以当前为止所收集的数据为条件，递归估计状态空间后验概率密度。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）卡尔曼滤波定位方法。卡尔曼滤波器是一种简单有效的线性最优递推估计算法，也是最广泛的贝叶斯滤波器。包括五个核心关系式："><span class="nav-number">1.2.5.</span> <span class="nav-text">（1）卡尔曼滤波定位方法。卡尔曼滤波器是一种简单有效的线性最优递推估计算法，也是最广泛的贝叶斯滤波器。包括五个核心关系式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#先验估计："><span class="nav-number">1.2.6.</span> <span class="nav-text">先验估计： =</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后验估计："><span class="nav-number">1.2.7.</span> <span class="nav-text">后验估计：  = +</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一步预测误差："><span class="nav-number">1.2.8.</span> <span class="nav-text">一步预测误差： = +</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#增益矩阵"><span class="nav-number">1.2.9.</span> <span class="nav-text">增益矩阵: =</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新一步预测误差：-（I-）"><span class="nav-number">1.2.10.</span> <span class="nav-text">更新一步预测误差： = （I-）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Roumeliotis-等利用卡尔曼滤波器，采用激光传感器探测路标，可以很好地实现机器人在工厂环境中的自定位与导航。Simon-J-Julier-等提出了无迹卡尔曼滤波器UKF（Unscented-Kalman-Filter），与EKF-不同的是，UKF-没有直接逼近非线性系统的状态过程以及观测模型，利用了真实的非线性模型。UKF-方法在精度以及鲁棒性方面都好于EKF，同时其计算量增加不大。"><span class="nav-number">1.2.11.</span> <span class="nav-text">Roumeliotis 等利用卡尔曼滤波器，采用激光传感器探测路标，可以很好地实现机器人在工厂环境中的自定位与导航。Simon J.Julier 等提出了无迹卡尔曼滤波器UKF（Unscented Kalman Filter），与EKF 不同的是，UKF 没有直接逼近非线性系统的状态过程以及观测模型，利用了真实的非线性模型。UKF 方法在精度以及鲁棒性方面都好于EKF，同时其计算量增加不大。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#卡尔曼滤波方法是一种高速高精度的局部定位方法，只需要知道噪声的均值和方差就可以迭代求解，且不需要大量计算和存储空间，因此得到广泛应用。但使用该算法的前提是状态噪声和观测噪声都必须均为高斯白噪声，且只能解决线性或弱的非线性问题，对于非线性系统无能为力。"><span class="nav-number">1.2.12.</span> <span class="nav-text">卡尔曼滤波方法是一种高速高精度的局部定位方法，只需要知道噪声的均值和方差就可以迭代求解，且不需要大量计算和存储空间，因此得到广泛应用。但使用该算法的前提是状态噪声和观测噪声都必须均为高斯白噪声，且只能解决线性或弱的非线性问题，对于非线性系统无能为力。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）马尔可夫定位方法。一般分为拓扑法和栅格法，栅格法目前很受学者青睐，因为它能简单可靠地实现全局定位，但随着栅格细化，也会极大地增加计算量和耗费存储空间。权衡计算量与定位精度之间的影响力成为使用栅格法的关键。"><span class="nav-number">1.2.13.</span> <span class="nav-text">（2）马尔可夫定位方法。一般分为拓扑法和栅格法，栅格法目前很受学者青睐，因为它能简单可靠地实现全局定位，但随着栅格细化，也会极大地增加计算量和耗费存储空间。权衡计算量与定位精度之间的影响力成为使用栅格法的关键。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）蒙特卡洛定位方法。也称粒子滤波，是最近几年刚开始在机器人学研究中得到应用的新方法。该方法不需要直接求解概率分布函数-而是用随机采样得到的样本集合来表示位置的不确定性。Dallert-等将粒子滤波和移动机器人运动和感知的概率模型相结合，提出了移动机器人蒙特卡罗定位MCL（Monte-Carlo-Localization）的思想。其基本思想是用一组滤波器来估计机器人的可能位置（处于该位置的概率），每个滤波器对应一个位置，利用观测对每个滤波器进行加权处理，从而使最有可能的位置的概率越来越高。Fox-等具体描述了MCL-并与其它算法进行比较。同时针对MCL-的不足提出了各种各样的改进方法，厉茂海、洪炳铭等提出基于混合高斯模型的蒙特卡罗定位方法，对采样进行优化，减少所需采样数。于金霞等采用改进的粒子滤波算法对移动机器人定位进行研究，将模糊地图匹配和粒子滤波重采样相结合，以减少粒子滤波采样中的不确定性影响，通过采用高斯混合分布近似建议分布对获得有效样本大小的样本权重计算方法进行改进，保证能够有合适的重采样次数。这种方法能够表示多峰分布，克服了卡尔曼定位只能解决单峰分布的不足，降低存贮空间，易于实现，定位精度高于马尔可夫算法，可以实现全局定位。但蒙特卡洛算法需考虑粒子退化和粒子重采样的问题。"><span class="nav-number">1.2.14.</span> <span class="nav-text">（3）蒙特卡洛定位方法。也称粒子滤波，是最近几年刚开始在机器人学研究中得到应用的新方法。该方法不需要直接求解概率分布函数, 而是用随机采样得到的样本集合来表示位置的不确定性。Dallert 等将粒子滤波和移动机器人运动和感知的概率模型相结合，提出了移动机器人蒙特卡罗定位MCL（Monte Carlo Localization）的思想。其基本思想是用一组滤波器来估计机器人的可能位置（处于该位置的概率），每个滤波器对应一个位置，利用观测对每个滤波器进行加权处理，从而使最有可能的位置的概率越来越高。Fox 等具体描述了MCL 并与其它算法进行比较。同时针对MCL 的不足提出了各种各样的改进方法，厉茂海、洪炳铭等提出基于混合高斯模型的蒙特卡罗定位方法，对采样进行优化，减少所需采样数。于金霞等采用改进的粒子滤波算法对移动机器人定位进行研究，将模糊地图匹配和粒子滤波重采样相结合，以减少粒子滤波采样中的不确定性影响，通过采用高斯混合分布近似建议分布对获得有效样本大小的样本权重计算方法进行改进，保证能够有合适的重采样次数。这种方法能够表示多峰分布，克服了卡尔曼定位只能解决单峰分布的不足，降低存贮空间，易于实现，定位精度高于马尔可夫算法，可以实现全局定位。但蒙特卡洛算法需考虑粒子退化和粒子重采样的问题。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未完待续…"><span class="nav-number">1.3.</span> <span class="nav-text">未完待续…</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhou Jing</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
