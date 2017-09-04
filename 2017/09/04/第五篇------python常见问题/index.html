@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://zhoujingliumaoshen.github.io/2017/09/04/第五篇------python常见问题/index.html">
 <meta property="og:site_name" content="周静的博客">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504503099318&di=16b0776788aa15d3ca0973b01fb0fced&imgtype=0&src=http%3A%2F%2Fwww.linuxprobe.com%2Fwp-content%2Fuploads%2F2016%2F08%2Fpython.png">
-<meta property="og:updated_time" content="2017-09-04T03:52:13.654Z">
+<meta property="og:updated_time" content="2017-09-04T03:55:40.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第五篇------python常见问题">
 <meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504503099318&di=16b0776788aa15d3ca0973b01fb0fced&imgtype=0&src=http%3A%2F%2Fwww.linuxprobe.com%2Fwp-content%2Fuploads%2F2016%2F08%2Fpython.png">
@@ -340,7 +340,8 @@
       
 
       
-        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1504503099318&amp;di=16b0776788aa15d3ca0973b01fb0fced&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.linuxprobe.com%2Fwp-content%2Fuploads%2F2016%2F08%2Fpython.png" alt=""><br><a id="more"></a></p>
+        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1504503099318&amp;di=16b0776788aa15d3ca0973b01fb0fced&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.linuxprobe.com%2Fwp-content%2Fuploads%2F2016%2F08%2Fpython.png" alt=""></p>
+<a id="more"></a>
 <h4 id="1-python3中，字典、元组不能直接索引！"><a href="#1-python3中，字典、元组不能直接索引！" class="headerlink" title="1. python3中，字典、元组不能直接索引！"></a><strong>1. python3中，字典、元组不能直接索引！</strong></h4><h5 id="如需索引字典、元组，必须先转化为列表形式，例如：firstStr-myTree-keys-0-转化为-firstStr-list-myTree-keys-0"><a href="#如需索引字典、元组，必须先转化为列表形式，例如：firstStr-myTree-keys-0-转化为-firstStr-list-myTree-keys-0" class="headerlink" title="如需索引字典、元组，必须先转化为列表形式，例如：firstStr = myTree.keys()[0]转化为 firstStr = list(myTree.keys())[0]"></a>如需索引字典、元组，必须先转化为列表形式，例如：firstStr = myTree.keys()[0]转化为 firstStr = list(myTree.keys())[0]</h5><h4 id="2-列表、数组的区别！"><a href="#2-列表、数组的区别！" class="headerlink" title="2. 列表、数组的区别！"></a><strong>2. 列表、数组的区别！</strong></h4><h5 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h5><pre><code>dataMat = [[1,2,3],[4,5,6],7,[8,9]]
 </code></pre><h5 id="数组-dataArr-array-dataMat"><a href="#数组-dataArr-array-dataMat" class="headerlink" title="数组 dataArr = array(dataMat)"></a>数组 dataArr = array(dataMat)</h5><pre><code>dataArr = [[1 2 3]
            [4 5 6]
@@ -348,8 +349,9 @@
            [8 9]]
 </code></pre><h4 id="3-weights-ones-n-表示什么？"><a href="#3-weights-ones-n-表示什么？" class="headerlink" title="3. weights = ones(n)表示什么？"></a>3. weights = ones(n)表示什么？</h4><h5 id="表示生成一个行向量-数组-，n个元素，元素值全为1。"><a href="#表示生成一个行向量-数组-，n个元素，元素值全为1。" class="headerlink" title="表示生成一个行向量(数组)，n个元素，元素值全为1。"></a>表示生成一个行向量(数组)，n个元素，元素值全为1。</h5><pre><code>weights = [1. 1. 1.   ...   1.]
 相当于  (1,1,1,   ...  ,1)
-</code></pre><h4 id="4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"><a href="#4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！" class="headerlink" title="4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"></a>4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！</h4><p>#####<br>     1）  &gt;&gt;&gt;alpha = 0.01</p>
-<pre><code>     &gt;&gt;&gt;list1 = [2,2,5]
+</code></pre><h4 id="4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"><a href="#4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！" class="headerlink" title="4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"></a>4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！</h4><p>#####</p>
+<pre><code>1）  &gt;&gt;&gt;alpha = 0.01
+     &gt;&gt;&gt;list1 = [2,2,5]
      &gt;&gt;&gt;print(alpha*list1)
      TypeError: can&apos;t multiply sequence by non-int of type &apos;float&apos;
 2）  &gt;&gt;&gt;alpha = 3
