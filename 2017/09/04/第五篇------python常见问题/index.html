@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://zhoujingliumaoshen.github.io/2017/09/04/第五篇------python常见问题/index.html">
 <meta property="og:site_name" content="周静的博客">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504507741658&di=ad825b783eea23c22b1b99fed37099e7&imgtype=0&src=http%3A%2F%2Fpic.666pic.com%2Fthumbs%2F1738826%2F12769596%2Fapi_thumb_450.jpg">
-<meta property="og:updated_time" content="2017-09-04T04:02:21.156Z">
+<meta property="og:updated_time" content="2017-09-04T04:05:13.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第五篇------python常见问题">
 <meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504507741658&di=ad825b783eea23c22b1b99fed37099e7&imgtype=0&src=http%3A%2F%2Fpic.666pic.com%2Fthumbs%2F1738826%2F12769596%2Fapi_thumb_450.jpg">
@@ -349,8 +349,8 @@
            [8 9]]
 </code></pre><h3 id="3-weights-ones-n-表示什么？"><a href="#3-weights-ones-n-表示什么？" class="headerlink" title="3. weights = ones(n)表示什么？"></a>3. weights = ones(n)表示什么？</h3><h4 id="表示生成一个行向量-数组-，n个元素，元素值全为1。"><a href="#表示生成一个行向量-数组-，n个元素，元素值全为1。" class="headerlink" title="表示生成一个行向量(数组)，n个元素，元素值全为1。"></a>表示生成一个行向量(数组)，n个元素，元素值全为1。</h4><pre><code>weights = [1. 1. 1.   ...   1.]
 相当于  (1,1,1,   ...  ,1)
-</code></pre><h3 id="4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"><a href="#4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！" class="headerlink" title="4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"></a>4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！</h3><p>####<br>     1）  &gt;&gt;&gt; alpha = 0.01</p>
-<pre><code>     &gt;&gt;&gt; list1 = [2,2,5]
+</code></pre><h3 id="4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"><a href="#4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！" class="headerlink" title="4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"></a>4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！</h3><pre><code>1）  &gt;&gt;&gt; alpha = 0.01
+     &gt;&gt;&gt; list1 = [2,2,5]
      &gt;&gt;&gt; print(alpha*list1)
      TypeError: can&apos;t multiply sequence by non-int of type &apos;float&apos;
 2）  &gt;&gt;&gt; alpha = 3
