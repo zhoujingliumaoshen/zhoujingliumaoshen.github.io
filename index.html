@@ -368,16 +368,35 @@
 
       
         
-          <div align="center"><br><img src="C:/Users/Administrator/Desktop/Python/我的博客图片/python符号.png" width="300" height="200" alt="python符号" align="center"><br></div>
-
-<h3 id="1-python3中，字典、元组不能直接索引！"><a href="#1-python3中，字典、元组不能直接索引！" class="headerlink" title="1. python3中，字典、元组不能直接索引！"></a>1. python3中，字典、元组不能直接索引！</h3><h4 id="如需索引字典、元组，必须先转化为列表形式，例如：firstStr-myTree-keys-0-转化为-firstStr-list-myTree-keys-0-。"><a href="#如需索引字典、元组，必须先转化为列表形式，例如：firstStr-myTree-keys-0-转化为-firstStr-list-myTree-keys-0-。" class="headerlink" title="如需索引字典、元组，必须先转化为列表形式，例如：firstStr = myTree.keys()[0]转化为 firstStr = list(myTree.keys())[0]。"></a>如需索引字典、元组，必须先转化为列表形式，例如：firstStr = myTree.keys()[0]转化为 firstStr = list(myTree.keys())[0]。</h4>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/04/第五篇------python常见问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <p><img src="http://boolan.com/UploadResources/PreviewImages/Course/12ad345c-5330-4d03-a6c4-b31e1b023f21.png" alt=""></p>
+<h3 id="1-python3中，字典、元组不能直接索引！"><a href="#1-python3中，字典、元组不能直接索引！" class="headerlink" title="1. python3中，字典、元组不能直接索引！"></a>1. python3中，字典、元组不能直接索引！</h3><h4 id="如需索引字典、元组，必须先转化为列表形式，例如：firstStr-myTree-keys-0-转化为-firstStr-list-myTree-keys-0-。"><a href="#如需索引字典、元组，必须先转化为列表形式，例如：firstStr-myTree-keys-0-转化为-firstStr-list-myTree-keys-0-。" class="headerlink" title="如需索引字典、元组，必须先转化为列表形式，例如：firstStr = myTree.keys()[0]转化为 firstStr = list(myTree.keys())[0]。"></a>如需索引字典、元组，必须先转化为列表形式，例如：firstStr = myTree.keys()[0]转化为 firstStr = list(myTree.keys())[0]。</h4><h3 id="2-列表、数组的区别！"><a href="#2-列表、数组的区别！" class="headerlink" title="2. 列表、数组的区别！"></a>2. 列表、数组的区别！</h3><h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><pre><code>dataMat = [[1,2,3],[4,5,6],7,[8,9]]
+</code></pre><h4 id="数组-dataArr-array-dataMat"><a href="#数组-dataArr-array-dataMat" class="headerlink" title="数组 dataArr = array(dataMat)"></a>数组 dataArr = array(dataMat)</h4><pre><code>dataArr = [[1 2 3]
+           [4 5 6]
+           7
+           [8 9]]
+</code></pre><h3 id="3-weights-ones-n-表示什么？"><a href="#3-weights-ones-n-表示什么？" class="headerlink" title="3. weights = ones(n)表示什么？"></a>3. weights = ones(n)表示什么？</h3><h4 id="表示生成一个行向量-数组-，n个元素，元素值全为1。"><a href="#表示生成一个行向量-数组-，n个元素，元素值全为1。" class="headerlink" title="表示生成一个行向量(数组)，n个元素，元素值全为1。"></a>表示生成一个行向量(数组)，n个元素，元素值全为1。</h4><pre><code>weights = [1. 1. 1.   ...   1.]
+相当于  (1,1,1,   ...  ,1)
+</code></pre><h3 id="4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"><a href="#4-列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！" class="headerlink" title="4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！"></a>4.列表外面不能直接乘以浮点数！把列表转换成数组之后就可以了！</h3><pre><code>1）  &gt;&gt;&gt; alpha = 0.01
+     &gt;&gt;&gt; list1 = [2,2,5]
+     &gt;&gt;&gt; print(alpha*list1)
+     TypeError: can&apos;t multiply sequence by non-int of type &apos;float&apos;
+2）  &gt;&gt;&gt; alpha = 3
+     &gt;&gt;&gt; list1 = [2,2,5]
+     &gt;&gt;&gt; print(alpha*list1)
+     [2, 2, 5, 2, 2, 5, 2, 2, 5]
+3）  &gt;&gt;&gt; alpha = 0.01
+     &gt;&gt;&gt; Arr1 = array(list1)
+     &gt;&gt;&gt; Arr1
+     [2 2 5]
+     &gt;&gt;&gt; print(alpha*Arr1)
+     [ 0.02  0.02  0.05]
+</code></pre><h3 id="5-多维数组"><a href="#5-多维数组" class="headerlink" title="5.多维数组"></a>5.多维数组</h3><pre><code>&gt;&gt;&gt; b = np.array([(1.5,2,3), (4,5,6)])
+&gt;&gt;&gt; b
+array([[ 1.5,  2. ,  3. ],
+       [ 4. ,  5. ,  6. ]])
+</code></pre>
+          
         
       
     </div>
@@ -1243,5 +1262,7 @@
 
   
 
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
 </body>
 </html>
